@@ -2,14 +2,15 @@
 # OIDC provider
 trust and authentication provider
 
-REGION_CODE=us-east-1 CLUSTER_NAME=roboshop-dev ACC_ID=315069654700
+REGION_CODE=us-east-1 CLUSTER_NAME=roboshop-dev ACC_ID=246816820124
 
 eksctl utils associate-iam-oidc-provider \
     --region $REGION_CODE \
     --cluster $CLUSTER_NAME \
     --approve
 ### Download IAM Policy
-curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.13.4/docs/install/iam_policy.json
+curl -o iam-policy.json \
+https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.13.4/docs/install/iam_policy.json
 # Create IAM Policy
 aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
