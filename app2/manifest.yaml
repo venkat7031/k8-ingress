@@ -1,42 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1
+  name: app2
   labels:
     purpose: ingress
     project: roboshop
-    app: app1
+    app: app2
 spec:
   replicas: 2
   selector:
     matchLabels:
       purpose: ingress
       project: roboshop
-      app: app1
+      app: app2
   template:
     metadata:
       labels:
         purpose: ingress
         project: roboshop
-        app: app1
+        app: app2
     spec:
       containers:
-      - name: app1
-        image: venky7031/app1:v1
+      - name: app2
+        image: venky7031/app2:v1
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: app1
+  name: app2
   labels:
     purpose: ingress
     project: roboshop
-    app: app1
+    app: app2
 spec:
   selector:
     purpose: ingress
     project: roboshop
-    app: app1
+    app: app2
   ports:
     - protocol: TCP
       port: 80 # service port
@@ -46,36 +46,37 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata: 
-  name: app1
+  name: app2
   labels:
     purpose: ingress
     project: roboshop
-    app: app1
+    app: app2
 spec:
   containers:
-  - name: app1
-    image: venky7031/app1:v1
+  - name: app2
+    image: venky7031/app2:v1
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app1
+  name: app2
   annotations:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:246816820124:certificate/49b3d16b-f8f4-4fcb-9f9f-26b2b927e2f2
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: joindevops
+  
 spec:
   ingressClassName: alb 
   rules:
-  - host: "app1.daws84.sbs"
+  - host: "app2.daws84.sbs"
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: app1
+            name: app2
             port:
-              number: 80 # app1 service port
+              number: 80 # app2 service port
